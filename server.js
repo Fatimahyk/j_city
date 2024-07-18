@@ -24,4 +24,9 @@ const startServer = async () => {
         console.error(error.message);
     }
 }
+
+app.get("/", (_req, res) => {
+    res.send("API is responding");
+  });
+  
 startServer()
