@@ -1,24 +1,10 @@
+import { cloudinaryMediaUpload } from "../config/cloudinary.js";
 import Tour  from "../models/tour.model.js"
-// const cloudinaryMediaUpload = require("../config/cloudinary.js");
 import dotenv from 'dotenv'
 dotenv.config();
-import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary'
-
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-
-
-const cloudinaryMediaUpload = async (filePath, folder) => {
-  return cloudinary.uploader.upload(filePath, { folder: folder });
-};
 
  export const createTour = async (req, res) => {
+    try {
     const {
       title,
       description,
@@ -29,23 +15,13 @@ const cloudinaryMediaUpload = async (filePath, folder) => {
       category,
       rating,
     } = req.body;
+    let  image = req.file;
   
-    const files = req.file;
-  
-    try {
-      if (!files || files.length === 0) {
-        return res.status(400).json({
-          statusCode: 400,
-          message: "At least one tour cover photo is required",
-        });
+    if (!image) {
+        return  res.status(404).json({message: 'At least one image is required'})
       }
-  
-      const uploadedImages = await Promise.all(
-        files.map(async (file) => {
-          const result = await cloudinaryMediaUpload(file.path, "tour_cover_photos");
-          return result.url;
-        })
-      );
+      const uploadedImages = await cloudinaryMediaUpload(req.file.path, 'tours')
+      image = uploadedImages.url
   
       const newTour = new Tour({
         title,
@@ -56,7 +32,7 @@ const cloudinaryMediaUpload = async (filePath, folder) => {
         rules,
         category,
         rating,
-        images: uploadedImages,
+        image
       });
   
       const savedTour = await newTour.save();
@@ -66,6 +42,7 @@ const cloudinaryMediaUpload = async (filePath, folder) => {
         message: "Successfully created",
         data: savedTour,
       });
+      console.log("Saved successfully", savedTour);
     } catch (error) {
       res.status(500).json({
         success: false,
@@ -73,8 +50,7 @@ const cloudinaryMediaUpload = async (filePath, folder) => {
         error: error.message,
       });
     }
-  };
-
+ }
 
 export const updateTour = async(req,res) => {
 

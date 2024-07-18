@@ -8,13 +8,20 @@ import router from './SRC/routes/index.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3690;
 
 app.use(bodyParser.json());
-app.use(cors());
-app.use('/jcityTour', router);
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(cors({origin:'*'}));
+app.use('/api/v1', router);
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Jcity is currently running on ${PORT}`);
-});
+
+const startServer = async () => {
+    const PORT = process.env.PORT
+    connectDB()
+    try {
+        app.listen(PORT, () => {console.log(`FROG is running on http://localhost:${PORT}`)})
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+startServer()

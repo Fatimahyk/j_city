@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const tourSchema = new mongoose.Schema(
     {
-        image:{
+        image:[{
             type:String,
             required: true,
-        },
+        }],
         title: {
             type: String,
             required: true,
@@ -20,8 +20,7 @@ const tourSchema = new mongoose.Schema(
             type: String
         },
         date:{
-            type: Date,
-            
+            type: Date,      
         },
         address: {
             type: String,
