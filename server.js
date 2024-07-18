@@ -19,7 +19,7 @@ const startServer = async () => {
     const PORT = process.env.PORT
     connectDB()
     try {
-        app.listen(PORT, () => {console.log(`FROG is running on http://localhost:${PORT}`)})
+        app.listen(PORT, () => {console.log(`J-CITY is running on http://localhost:${PORT}`)})
     } catch (error) {
         console.error(error.message);
     }
