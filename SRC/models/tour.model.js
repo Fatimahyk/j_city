@@ -20,7 +20,7 @@ const tourSchema = new mongoose.Schema(
             type: String
         },
         date:{
-            type: Date,      
+            type: String,      
         },
         address: {
             type: String,
@@ -34,7 +34,7 @@ const tourSchema = new mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ["hotels",'current events', 'upcoming events', 'apartments', 'hospitals', 'resturants', 'markets and malls', 'attractions', "Hotels",'Current events', 'Upcoming events', 'Apartments', 'Hospitals', 'Resturants', 'Markets and Malls', 'Attractions'],
+            enum: ['markets','4+ rating','culture','wedding','sports','tech','seminar','networking', 'hotels','current events', 'upcoming events', 'apartments', 'hospitals', 'resturants', 'markets and malls', 'attractions', 'Culture','Wedding','Sports', 'Tech', 'Seminar','Networking','Hotels','Current events', 'Upcoming events', 'Apartments', 'Hospitals', 'Resturants', 'Jos', 'Markets', 'Water Fall', 'All', 'Amusement Parks', 'Mountains', 'Museums', 'Markets and Malls', 'Attractions'],
             required: true
         }
 
