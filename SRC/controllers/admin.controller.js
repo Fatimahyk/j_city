@@ -130,7 +130,7 @@ export const getAllTour = async(req,res) => {
     try{
 
         const tours = await Tour.find({})
-            .skip((page - 1) * 10)
+            .skip((page - 1) * 50)
             .limit(10)
 
         res.status(200).json({
