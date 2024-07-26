@@ -131,7 +131,7 @@ export const getAllTour = async(req,res) => {
 
         const tours = await Tour.find({})
             .skip((page - 1) * 50)
-            .limit(10)
+            .limit(50)
 
         res.status(200).json({
             success: true,
